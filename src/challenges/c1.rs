@@ -7,5 +7,5 @@ const OUTPUT: &str = "SSdtIGtpbGxpbmcgeW91ciBicmFpbiBsaWtlIGEgcG9pc29ub3VzIG11c2
 pub fn run() {
   println!("CHALLENGE 1...");
   assert_eq!(String::from_utf8_lossy(&base64::encode(&hex::decode(INPUT))), OUTPUT);
-  println!("OK.")
+  println!("OK.");
 }
