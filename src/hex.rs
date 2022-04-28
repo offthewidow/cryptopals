@@ -1,3 +1,18 @@
+const TABLE: &[u8] = "0123456789abcdef".as_bytes();
+
+fn table_at(i: u8) -> u8 {
+  TABLE[i as usize]
+}
+
+pub fn encode<T: AsRef<[u8]>>(bytes: T) -> Vec<u8> {
+  bytes
+    .as_ref()
+    .iter()
+    .map(|byte| [ table_at(byte >> 4), table_at(byte & 15) ])
+    .flatten()
+    .collect()
+}
+
 fn decode_chunk(chunk: &[u8]) -> u8 {
   fn convert(byte: u8) -> u8 {
     match byte {
