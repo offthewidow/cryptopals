@@ -1,12 +1,10 @@
-use cryptopals::hex;
-use cryptopals::xor::xor;
+use crate::{hex, xor};
 
-const INPUT1: &str = "1c0111001f010100061a024b53535009181c";
-const INPUT2: &str = "686974207468652062756c6c277320657965";
-const OUTPUT: &str = "746865206b696420646f6e277420706c6179";
+#[test]
+fn run() {
+  let input_1 = hex::decode(b"1c0111001f010100061a024b53535009181c");
+  let input_2 = hex::decode(b"686974207468652062756c6c277320657965");
+  let output = hex::encode(&xor::fixed(&input_1, &input_2));
 
-pub fn run() {
-  println!("CHALLENGE 2...");
-  assert_eq!(String::from_utf8_lossy(&hex::encode(xor(hex::decode(INPUT1), hex::decode(INPUT2)))), OUTPUT);
-  println!("OK.");
+  assert_eq!(String::from_utf8_lossy(&output), "746865206b696420646f6e277420706c6179");
 }

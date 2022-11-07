@@ -1,14 +1,13 @@
-const TABLE: &[u8] = "0123456789abcdef".as_bytes();
+const TABLE: &[u8] = b"0123456789abcdef";
 
 fn table_at(i: u8) -> u8 {
   TABLE[i as usize]
 }
 
-pub fn encode<T: AsRef<[u8]>>(bytes: T) -> Vec<u8> {
-  bytes
-    .as_ref()
+pub fn encode(buf: &[u8]) -> Vec<u8> {
+  buf
     .iter()
-    .map(|byte| [ table_at(byte >> 4), table_at(byte & 15) ])
+    .map(|byte| [table_at(byte >> 4), table_at(byte & 15)])
     .flatten()
     .collect()
 }
@@ -26,14 +25,12 @@ fn decode_chunk(chunk: &[u8]) -> u8 {
   convert(chunk[0]) << 4 | convert(chunk[1])
 }
 
-pub fn decode<T: AsRef<[u8]>>(bytes: T) -> Vec<u8> {
-  let bytes = bytes.as_ref();
-
-  if bytes.len() % 2 != 0 {
+pub fn decode(buf: &[u8]) -> Vec<u8> {
+  if buf.len() % 2 != 0 {
     panic!("hex: odd length");
   }
 
-  bytes
+  buf
     .chunks(2)
     .map(decode_chunk)
     .collect()

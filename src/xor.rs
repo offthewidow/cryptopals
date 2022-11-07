@@ -1,6 +1,4 @@
-pub fn xor<T: AsRef<[u8]>>(a: T, b: T) -> Vec<u8> {
-  let (a, b) = (a.as_ref(), b.as_ref());
-
+pub fn fixed(a: &[u8], b: &[u8]) -> Vec<u8> {
   if a.len() != b.len() {
     panic!("xor: different length");
   }
