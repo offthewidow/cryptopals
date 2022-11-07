@@ -5,11 +5,14 @@ fn table_at(i: u8) -> u8 {
 }
 
 pub fn encode(buf: &[u8]) -> Vec<u8> {
-  buf
-    .iter()
-    .map(|byte| [table_at(byte >> 4), table_at(byte & 15)])
-    .flatten()
-    .collect()
+  let mut v = Vec::with_capacity(buf.len() * 2);
+
+  for byte in buf {
+    v.push(table_at(byte >> 4));
+    v.push(table_at(byte & 15));
+  }
+
+  v
 }
 
 fn decode_chunk(chunk: &[u8]) -> u8 {
